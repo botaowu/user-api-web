@@ -259,4 +259,26 @@ public class UserServletTest {
         assertEquals(response.getContentAsString(), "token[" + token + "] has been invalidated");
     }
 
+    @Test
+    public void testCheckRole2() throws IOException, ServletException {
+        String username = "Spring";
+        String role = "Admin";
+        String token = GlobalStorage.getTokens().get(username).getContent();
+        request.setParameter("token", token);
+        request.setParameter("role", role);
+        checkRoleServlet.doPost(request, response);
+
+        assertEquals(response.getContentAsString(), "Error: token[" + token + "] is expired");
+    }
+
+    @Test
+    public void testListRole2() throws IOException, ServletException {
+        String username = "Spring";
+        String token = GlobalStorage.getTokens().get(username).getContent();
+        request.setParameter("token", token);
+        listRoleServlet.doPost(request, response);
+
+        assertEquals(response.getContentAsString(), "Error: token[" + token + "] is expired");
+    }
+
 }
