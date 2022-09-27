@@ -3,8 +3,7 @@ package im.tao.servlet.user;
 import im.tao.entity.User;
 import im.tao.servlet.base.BaseServlet;
 import im.tao.storage.GlobalStorage;
-import im.tao.util.Constant;
-import im.tao.util.Sms4;
+import im.tao.util.EncryptUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,7 +33,7 @@ public class UserServlet extends BaseServlet {
 			resp.getWriter().print("Error: username or password invalid");
 			return;
 		}
-		String encryptedPassword = Sms4.encrypt(password, Constant.ENCRYPT_KEY);
+		String encryptedPassword = EncryptUtil.encode(password);
 
 		User user = GlobalStorage.getUsers().get(username);
 		if (user != null) {
